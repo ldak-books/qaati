@@ -1,0 +1,999 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>قاعتي</title>
+<meta name="theme-color" content="#0e5a47">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Reem+Kufi:wght@500;700&family=Tajawal:wght@400;500;700&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f3f5f2; --surface:#ffffff; --ink:#13231e; --muted:#566660; --line:#d9e0db;
+  --brand:#0e5a47; --brand-ink:#ffffff; --brass:#85590a; --brass-soft:#f4e9cf;
+  --ok:#17724a; --ok-bg:#dff3e8; --warn:#7a5200; --warn-bg:#fbebc8; --bad:#a3302a; --bad-bg:#f8dcda;
+  --font-display:'Reem Kufi','Tajawal',system-ui,sans-serif;
+  --font-body:'Tajawal',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){:root{
+  color-scheme:dark;
+  --bg:#0d1613; --surface:#142019; --ink:#e7efea; --muted:#9bada5; --line:#243630;
+  --brand:#46b894; --brand-ink:#06231a; --brass:#e0b04f; --brass-soft:#3a2f14;
+  --ok:#6fd6a3; --ok-bg:#12382a; --warn:#f0c060; --warn-bg:#3b2d0c; --bad:#f19a94; --bad-bg:#3d1b19}}
+*{box-sizing:border-box}
+html{scroll-padding-top:70px}
+body{
+  margin:0;background:var(--bg);color:var(--ink);direction:rtl;
+  font:400 16px/1.6 var(--font-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:96px;
+}
+body[dir="ltr"]{direction:ltr;--font-display:'Tajawal',system-ui,sans-serif}
+.wrap{max-width:560px;margin-inline:auto}
+h1,h2,h3{font-family:var(--font-display);font-weight:700;line-height:1.3;margin:0;text-wrap:balance}
+h1{font-size:1.65rem} h2{font-size:1.2rem} h3{font-size:1.08rem}
+p{margin:0}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+
+.top{position:sticky;top:0;z-index:9;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line);margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.top .wrap{display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 1.35rem var(--font-display);color:var(--brand)}
+.brand svg{width:28px;height:28px;stroke:var(--brand);fill:none;stroke-width:2}
+.langbtn{margin-inline-start:auto;min-height:40px;padding:4px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-weight:700}
+
+main{padding-block:20px 8px;display:flex;flex-direction:column;gap:20px}
+.lead{color:var(--muted);margin-top:4px}
+
+.fld{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fld label,.lbl{font-weight:500;font-size:.95rem}
+input[type=text],input[type=tel],input[type=number],input[type=date],input[type=email],input[type=password],select,textarea{
+  width:100%;min-height:48px;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--ink)}
+textarea{min-height:92px;resize:vertical}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid2>*{min-width:0}
+@media (max-width:420px){.grid2.stack{grid-template-columns:1fr}}
+.err{color:var(--bad);font-size:.9rem}
+.hint{color:var(--muted);font-size:.9rem}
+.okbox{color:var(--ok);background:var(--ok-bg);padding:10px 12px;border-radius:12px;font-size:.95rem}
+.errbox{color:var(--bad);background:var(--bad-bg);padding:10px 12px;border-radius:12px;font-size:.95rem}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 18px;border-radius:12px;border:1px solid var(--brand);background:var(--brand);color:var(--brand-ink);font-weight:700;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--brand)}
+.btn.danger{background:transparent;border-color:var(--bad);color:var(--bad)}
+.btn.small{min-height:40px;padding:6px 14px;font-size:.92rem}
+.btn.block{width:100%}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.linkbtn{background:none;border:0;padding:6px 0;color:var(--brand);font-weight:700;cursor:pointer;text-align:start;min-height:40px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:4px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:.9rem}
+button.chip{cursor:pointer;min-height:40px}
+button.chip[aria-pressed="true"]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.82rem;font-weight:700}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.pill.muted{background:var(--line);color:var(--muted)}
+
+.list{display:flex;flex-direction:column;gap:16px}
+.card{display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.card .art,.card .photo,.media .art,.media .photo{display:block;width:100%;height:150px;object-fit:cover}
+.media .art,.media .photo{height:210px}
+.card .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px}
+.card .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.loc{color:var(--muted);font-size:.95rem}
+.price{font:700 1.2rem var(--font-display);color:var(--brass)}
+.price small{font:400 .85rem var(--font-body);color:var(--muted)}
+.count{color:var(--muted);font-size:.92rem}
+.empty{border:1px dashed var(--line);border-radius:16px;padding:24px 18px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center}
+.note{color:var(--muted);font-size:.88rem;border-top:1px solid var(--line);padding-top:14px}
+
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;min-height:40px}
+.back svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+.media{border-radius:16px;overflow:hidden}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:12px;border-block:1px solid var(--line);padding-block:14px}
+.facts div{min-width:0}
+.facts span{display:block;color:var(--muted);font-size:.88rem}
+.facts b{font:700 1.15rem var(--font-display)}
+.sec{display:flex;flex-direction:column;gap:12px}
+.sec+.sec{border-top:1px solid var(--line);padding-top:20px}
+
+.cal{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cal-head b{font:700 1.05rem var(--font-display)}
+.cal-head button{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:transparent;cursor:pointer}
+.cal-head button:disabled{opacity:.35;cursor:not-allowed}
+.cal-head svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:2}
+.dows,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.dows span{text-align:center;color:var(--muted);font-size:.8rem;padding-block:4px}
+.day{aspect-ratio:1;min-height:40px;border-radius:10px;border:1px solid transparent;background:transparent;cursor:pointer;font-variant-numeric:tabular-nums}
+.day:hover:not(:disabled){border-color:var(--brand)}
+.day.today{border-color:var(--muted)}
+.day.past{color:var(--muted);opacity:.4;cursor:default}
+.day.busy{background:var(--bad-bg);color:var(--bad);text-decoration:line-through;cursor:not-allowed}
+.day.sel{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:700}
+.legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.85rem;margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-inline-end:6px;vertical-align:-1px}
+.seldate{font-weight:700}
+
+.item{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.item .row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.item dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:.95rem}
+.item dt{color:var(--muted)} .item dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.sub{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:10px}
+.code{font-variant-numeric:tabular-nums;letter-spacing:.04em;color:var(--muted);font-size:.88rem}
+.photo-prev{width:100%;max-height:180px;object-fit:cover;border-radius:12px}
+.blocked{display:flex;gap:8px;flex-wrap:wrap}
+.flash{outline:2px solid var(--brand)}
+.who{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.92rem}
+.who bdi{overflow-wrap:anywhere}
+
+.tabs{position:fixed;inset:auto 0 0;z-index:9;background:var(--surface);border-top:1px solid var(--line);
+  padding:6px max(16px,env(safe-area-inset-left,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-right,0px))}
+.tabs div{max-width:560px;margin-inline:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tabs a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px;border-radius:12px;text-decoration:none;color:var(--muted);font-size:.8rem;min-height:52px;justify-content:center;text-align:center}
+.tabs a[aria-current="page"]{color:var(--brand);font-weight:700;background:var(--brass-soft)}
+.tabs svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+#toast{position:fixed;inset:auto 0 calc(84px + env(safe-area-inset-bottom,0px));margin-inline:auto;width:max-content;max-width:calc(100% - 32px);
+  background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none;z-index:20}
+#toast.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+
+.sig{max-width:560px;margin:8px auto 0;padding-top:18px;text-align:center;direction:ltr}
+.sig-name{font:400 2.6rem/1.1 'Great Vibes','Brush Script MT',cursive;letter-spacing:.04em;
+  background:linear-gradient(135deg,#8a5d08 0%,#d9a93a 35%,#f3d58a 50%,#c48f1f 70%,#8a5d08 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;display:inline-block;padding-inline:6px}
+.sig-heart{display:block;width:14px;height:14px;margin:0 auto 6px;fill:#c9972b}
+.sig-lines{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:4px}
+.sig-lines i{display:block;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#c9972b,transparent)}
+.sig-lines i:first-child{width:96px}.sig-lines i:last-child{width:56px}
+@media (prefers-color-scheme: dark){.sig-name{background:linear-gradient(135deg,#c48f1f 0%,#f0cb70 40%,#fff0c2 52%,#e0b04f 70%,#b98a22 100%);-webkit-background-clip:text;background-clip:text}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#halls"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V11a8 8 0 0 1 16 0v10M9 21v-6a3 3 0 0 1 6 0v6"/></svg><span id="bname">قاعتي</span></a>
+  <button type="button" class="langbtn" id="langbtn">Français</button>
+</div></header>
+
+<main class="wrap" id="app"></main>
+
+<footer class="sig" role="contentinfo" aria-label="LDAK"><svg class="sig-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.3C.9 8.2 2.9 4.5 6.5 4.5c2 0 3.7 1.1 5.5 3.2 1.8-2.1 3.5-3.2 5.5-3.2 3.6 0 5.6 3.7 4.1 7.2C19.5 16.4 12 21 12 21z"/></svg><span class="sig-name" aria-hidden="true">LDAK</span><div class="sig-lines" aria-hidden="true"><i></i><i></i></div></footer>
+
+<nav class="tabs" id="tabs" aria-label="التنقل الرئيسي"><div>
+  <a href="#halls" data-tab="halls"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V11a8 8 0 0 1 16 0v10M9 21v-6a3 3 0 0 1 6 0v6"/></svg><span>القاعات</span></a>
+  <a href="#bookings" data-tab="bookings"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg><span>حجوزاتي</span></a>
+  <a href="#owner" data-tab="owner"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10l2-5h12l2 5M5 10v10h14V10M10 20v-5h4v5"/></svg><span>صاحب قاعة</span></a>
+</div></nav>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============ إعداد الربط مع Supabase (املئي القيمتين فقط) ============
+   Supabase > Project Settings > API
+   url : Project URL            مثال: https://abcdxyz.supabase.co
+   key : anon / publishable key (المفتاح العام فقط. لا تضعي service_role أبداً)  */
+window.QAATI_CONFIG = {
+  url: 'https://bwigiqrnidotfsgpckjl.supabase.co',
+  key: 'sb_publishable_LtvD0-30T3gYjDqNdCHQng_rUdPASpg'
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+var fmt=function(n){return Number(n).toLocaleString('en-US').replace(/,/g,' ')};
+var pad=function(n){return String(n).padStart(2,'0')};
+var iso=function(y,m,d){return y+'-'+pad(m+1)+'-'+pad(d)};
+var todayIso=function(){var t=new Date();return iso(t.getFullYear(),t.getMonth(),t.getDate())};
+var UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+var BUCKET='hall-photos';
+var scalar=function(x){return (x&&typeof x==='object')?String(Object.keys(x).map(function(k){return x[k]})[0]):String(x)};
+
+/* ---------- language ---------- */
+var LANG='ar';
+try{var sl=localStorage.getItem('qaati.lang');if(sl==='fr'||sl==='ar')LANG=sl;else if((navigator.language||'').slice(0,2)==='fr')LANG='fr'}catch(e){}
+var isFr=function(){return LANG==='fr'};
+var L=function(){return isFr()?1:0};
+var I={
+ navLabel:['التنقل الرئيسي','Navigation principale'],
+ tabHalls:['القاعات','Salles'],tabBookings:['حجوزاتي','Réservations'],tabOwner:['صاحب قاعة','Propriétaire'],
+ loading:['جارٍ التحميل…','Chargement…'],
+ eNet:['تعذّر الاتصال بالخادم. تحقق من الإنترنت وحاول مرة أخرى.','Connexion impossible. Vérifiez internet et réessayez.'],
+ retry:['إعادة المحاولة','Réessayer'],
+ setupTitle:['التطبيق غير مربوط بعد','L’application n’est pas encore connectée'],
+ setupText:['افتحي ملف التطبيق وضعي عنوان مشروع Supabase والمفتاح العام (anon) في أعلى الملف داخل QAATI_CONFIG.','Ouvrez le fichier et renseignez l’URL du projet Supabase et la clé publique (anon) dans QAATI_CONFIG, en haut du fichier.'],
+ setupLib:['تعذّر تحميل مكتبة Supabase. تحقق من الإنترنت ثم أعد تحميل الصفحة.','Impossible de charger la bibliothèque Supabase. Vérifiez internet puis rechargez la page.'],
+ h1Halls:['احجز قاعة مناسبتك','Réservez la salle de votre événement'],
+ leadHalls:['اختر التاريخ وشاهد القاعات المتاحة.','Choisissez la date pour voir les salles disponibles.'],
+ soon:['قريباً','bientôt'],soonTitle:['هذه الولاية لم تنطلق بعد','Cette wilaya n’est pas encore ouverte'],
+ soonHint:['إذا عندك قاعة في هذه الولاية، سجّلها مسبقاً وتظهر عند الانطلاق.','Si vous avez une salle ici, inscrivez-la à l’avance : elle apparaîtra au lancement.'],
+ soonOwnerHint:['هذه الولاية لم تنطلق بعد. تُحفظ قاعتك وتظهر للزبائن عند انطلاقها.','Cette wilaya n’est pas encore ouverte. Votre salle sera enregistrée et visible dès son lancement.'],
+ waOwner:['راسل القاعة على واتساب','Écrire à la salle sur WhatsApp'],waCustomer:['راسل الزبون على واتساب','Écrire au client sur WhatsApp'],
+ waMsgHall:['السلام عليكم، أريد الاستفسار عن قاعة {0}.','Bonjour, je souhaite des informations sur la salle {0}.'],
+ waMsgCust:['السلام عليكم، أرسلت طلب حجز لقاعة {0} بتاريخ {1} (رقم الطلب {2}).','Bonjour, j’ai envoyé une demande de réservation pour la salle {0} le {1} (réf. {2}).'],
+ waMsgOwner:['السلام عليكم {0}، بخصوص طلبك لقاعة {1} بتاريخ {2}.','Bonjour {0}, au sujet de votre demande pour la salle {1} le {2}.'],
+ fWilaya:['الولاية','Wilaya'],allWilayas:['كل الولايات','Toutes les wilayas'],pickWilaya:['اختر الولاية','Choisir la wilaya'],
+ fEvent:['المناسبة','Événement'],allEvents:['كل المناسبات','Tous les événements'],fDate:['التاريخ','Date'],
+ fQuery:['اسم القاعة أو البلدية','Nom de la salle ou commune'],phQuery:['مثال: الياسمين','Ex. : Jasmin'],
+ noMatch:['لا توجد قاعات مطابقة','Aucune salle trouvée'],
+ noMatchHint:['جرّب مناسبة أو تاريخاً آخر، أو أزل الفلاتر.','Essayez un autre événement ou une autre date, ou retirez les filtres.'],
+ noHallsIn:['لا توجد قاعات مسجلة في ولاية {0} بعد.','Aucune salle enregistrée à {0} pour le moment.'],
+ resetF:['إزالة الفلاتر','Réinitialiser les filtres'],registerHall:['سجّل قاعتك','Inscrire ma salle'],
+ countHalls:['{0} قاعة','{0} salle(s)'],availBadge:['متاحة في هذا التاريخ','Disponible à cette date'],
+ upTo:['حتى {0} مدعو','Jusqu’à {0} invités'],perNight:['/ الليلة','/ nuit'],cur:['دج','DA'],
+ back:['كل القاعات','Toutes les salles'],notFound:['هذه القاعة غير موجودة','Cette salle n’existe pas'],notFoundHint:['ربما لم تعد متاحة.','Elle n’est peut-être plus disponible.'],
+ capacity:['السعة','Capacité'],capVal:['{0} مدعو','{0} invités'],nightPrice:['سعر الليلة','Prix par nuit'],
+ events:['المناسبات','Événements'],features:['المرافق','Équipements'],
+ pickDate:['اختر تاريخ المناسبة','Choisissez la date'],
+ legYours:['تاريخك','Votre date'],legBusy:['محجوز','Réservé'],legFree:['متاح','Disponible'],
+ noDate:['لم تختر تاريخاً بعد.','Aucune date choisie.'],prevM:['الشهر السابق','Mois précédent'],nextM:['الشهر التالي','Mois suivant'],
+ yourInfo:['بياناتك','Vos informations'],fullName:['الاسم الكامل','Nom complet'],phone:['رقم الهاتف','Téléphone'],
+ eventType:['نوع المناسبة','Type d’événement'],guests:['عدد المدعوين','Nombre d’invités'],
+ notesOpt:['ملاحظات (اختياري)','Remarques (facultatif)'],phNotes:['مثال: نريد الحجز من العصر إلى الفجر','Ex. : de l’après-midi jusqu’à l’aube'],
+ send:['أرسل طلب الحجز','Envoyer la demande'],sending:['جارٍ الإرسال…','Envoi…'],
+ sendHint:['الطلب لا يصبح حجزاً مؤكداً حتى يقبله صاحب القاعة. لا يُدفع أي مبلغ داخل التطبيق.','La demande n’est confirmée qu’après acceptation par le propriétaire. Aucun paiement n’est effectué dans l’application.'],
+ errDate:['اختر تاريخ المناسبة من التقويم.','Choisissez la date dans le calendrier.'],
+ errBusy:['هذا التاريخ محجوز، اختر تاريخاً آخر.','Cette date est déjà réservée, choisissez-en une autre.'],
+ errDup:['لديك طلب سابق لهذا التاريخ في هذه القاعة.','Vous avez déjà une demande pour cette date dans cette salle.'],
+ errName:['اكتب الاسم الكامل.','Saisissez votre nom complet.'],
+ errPhone:['اكتب رقم هاتف جزائري صحيحاً، مثل 0550 12 34 56.','Saisissez un numéro algérien valide, par ex. 0550 12 34 56.'],
+ errGuests:['اكتب عدد المدعوين (10 على الأقل).','Saisissez le nombre d’invités (10 minimum).'],errCap:['سعة القاعة {0} مدعو.','La capacité de la salle est de {0} invités.'],
+ eHall:['هذه القاعة غير متاحة للحجز حالياً.','Cette salle n’est pas disponible actuellement.'],
+ eDatePast:['لا يمكن اختيار تاريخ مضى.','Impossible de choisir une date passée.'],
+ eDateFar:['هذا التاريخ بعيد جداً.','Cette date est trop lointaine.'],
+ eEvent:['هذه المناسبة غير مقبولة في هذه القاعة.','Cet événement n’est pas accepté dans cette salle.'],
+ eRate:['وصلت الحد اليومي لعدد الطلبات. حاول غداً أو تواصل مع القاعة مباشرة.','Limite quotidienne de demandes atteinte. Réessayez demain ou contactez la salle.'],
+ eServer:['تحقق من البيانات المدخلة.','Vérifiez les informations saisies.'],
+ toastSent:['أُرسل طلبك. ننتظر رد صاحب القاعة.','Demande envoyée. Le propriétaire doit répondre.'],
+ myBookings:['حجوزاتي','Mes réservations'],myBookingsLead:['طلباتك وحالتها.','Vos demandes et leur statut.'],
+ noBookings:['لا توجد حجوزات بعد','Aucune réservation pour le moment'],noBookingsHint:['اختر قاعة وتاريخاً ثم أرسل طلبك.','Choisissez une salle et une date, puis envoyez votre demande.'],
+ browse:['تصفح القاعات','Voir les salles'],lDate:['التاريخ','Date'],lEvent:['المناسبة','Événement'],lWilaya:['الولاية','Wilaya'],
+ evGuests:['{0} · {1} مدعو','{0} · {1} invités'],reqNo:['رقم الطلب: {0}','N° de demande : {0}'],
+ pendingNote:['في انتظار رد صاحب القاعة.','En attente de la réponse du propriétaire.'],
+ confirmedNote:['تم تأكيد حجزك. تواصل مع صاحب القاعة لترتيب العربون.','Votre réservation est confirmée. Contactez le propriétaire pour l’acompte.'],
+ rejectedNote:['لم يقبل صاحب القاعة هذا الطلب. جرّب تاريخاً أو قاعة أخرى.','Le propriétaire n’a pas accepté cette demande. Essayez une autre date ou une autre salle.'],
+ cancelReq:['إلغاء الطلب','Annuler la demande'],confirmCancel:['تأكيد الإلغاء','Confirmer l’annulation'],
+ cancelFail:['تعذّر إلغاء الطلب (ربما أُلغي مسبقاً).','Annulation impossible (peut-être déjà annulée).'],
+ localNote:['نحفظ أرقام طلباتك على هذا الجهاز لنعرض حالتها. احتفظ برقم الطلب.','Les numéros de vos demandes sont mémorisés sur cet appareil. Conservez votre numéro.'],
+ tCancelled:['تم إلغاء الطلب','Demande annulée'],
+ trackTitle:['تتبّع طلب','Suivre une demande'],trackHint:['إذا لم يظهر طلبك هنا، اكتب رقم الطلب ورقم هاتفك.','Si votre demande n’apparaît pas ici, saisissez son numéro et votre téléphone.'],
+ reqCode:['رقم الطلب','N° de demande'],trackBtn:['بحث','Rechercher'],errCode:['اكتب رقم الطلب.','Saisissez le numéro de demande.'],
+ notFoundBk:['لم نجد طلباً بهذه البيانات.','Aucune demande trouvée avec ces informations.'],tTracked:['تمت إضافة الطلب','Demande ajoutée'],
+ ownerTitle:['لصاحب القاعة','Espace propriétaire'],ownerLead:['أضف قاعتك. بعد المراجعة تظهر للزبائن، وتدير الطلبات والتواريخ من هنا.','Ajoutez votre salle. Après validation elle apparaît aux clients, et vous gérez demandes et dates ici.'],
+ authTitle:['دخول صاحب القاعة','Connexion propriétaire'],authLead:['سجّل دخولك لإضافة قاعتك وإدارة الطلبات.','Connectez-vous pour ajouter votre salle et gérer les demandes.'],
+ email:['البريد الإلكتروني','E-mail'],password:['كلمة السر','Mot de passe'],newPassword:['كلمة سر جديدة (8 أحرف على الأقل)','Nouveau mot de passe (8 caractères minimum)'],
+ login:['تسجيل الدخول','Se connecter'],signup:['إنشاء حساب','Créer un compte'],forgot:['نسيت كلمة السر؟','Mot de passe oublié ?'],
+ sendReset:['أرسل رابط الاستعادة','Envoyer le lien'],haveAcc:['عندي حساب','J’ai déjà un compte'],noAcc:['ليس عندي حساب','Je n’ai pas de compte'],
+ saveNewPw:['حفظ كلمة السر','Enregistrer'],logout:['خروج','Se déconnecter'],loggedAs:['الحساب:','Compte :'],recoverTitle:['كلمة سر جديدة','Nouveau mot de passe'],
+ eEmail:['اكتب بريداً إلكترونياً صحيحاً.','Saisissez un e-mail valide.'],ePw:['كلمة السر 8 أحرف على الأقل.','Au moins 8 caractères.'],ePwEmpty:['اكتب كلمة السر.','Saisissez le mot de passe.'],
+ eLogin:['البريد أو كلمة السر غير صحيحة.','E-mail ou mot de passe incorrect.'],
+ eConfirm:['أكّد بريدك الإلكتروني أولاً (افتح الرسالة التي وصلتك).','Confirmez d’abord votre e-mail (ouvrez le message reçu).'],
+ eExists:['هذا البريد مسجل مسبقاً. سجّل الدخول أو استعد كلمة السر.','Cet e-mail est déjà inscrit. Connectez-vous ou réinitialisez le mot de passe.'],
+ eAuthRate:['محاولات كثيرة. انتظر قليلاً ثم أعد المحاولة.','Trop de tentatives. Patientez un peu puis réessayez.'],
+ iConfirm:['أرسلنا رسالة تأكيد إلى بريدك. افتحها ثم سجّل الدخول.','Un message de confirmation a été envoyé. Ouvrez-le puis connectez-vous.'],
+ iReset:['إذا كان البريد مسجلاً فستصلك رسالة لاستعادة كلمة السر.','Si l’e-mail est inscrit, vous recevrez un lien de réinitialisation.'],
+ tPwSaved:['تم تغيير كلمة السر','Mot de passe modifié'],tLogged:['مرحباً بك','Bienvenue'],tOut:['تم تسجيل الخروج','Déconnecté'],
+ hallInfo:['معلومات القاعة','Informations sur la salle'],hallName:['اسم القاعة','Nom de la salle'],commune:['البلدية أو الحي','Commune ou quartier'],
+ maxGuests:['عدد المدعوين الأقصى','Capacité maximale'],priceNight:['سعر الليلة (دج)','Prix par nuit (DA)'],hallPhone:['هاتف القاعة','Téléphone de la salle'],
+ acceptedEvents:['المناسبات المقبولة','Événements acceptés'],descOpt:['وصف قصير (اختياري)','Courte description (facultatif)'],
+ photoOpt:['صورة القاعة (اختياري)','Photo de la salle (facultatif)'],photoPrev:['معاينة الصورة','Aperçu de la photo'],removePhoto:['حذف الصورة','Supprimer la photo'],
+ saveHall:['حفظ القاعة','Enregistrer la salle'],saving:['جارٍ الحفظ…','Enregistrement…'],cancel:['إلغاء','Annuler'],
+ editHall:['تعديل','Modifier'],editWarn:['تعديل الاسم أو الولاية أو البلدية أو الهاتف أو الوصف أو الصورة يعيد القاعة إلى المراجعة.','Modifier le nom, la wilaya, la commune, le téléphone, la description ou la photo remet la salle en validation.'],
+ stPendingHall:['قيد المراجعة','En validation'],stApproved:['معتمدة','Validée'],stSuspended:['موقوفة','Suspendue'],
+ reviewNote:['قاعتك قيد المراجعة ولن تظهر للزبائن حتى يتم اعتمادها.','Votre salle est en cours de validation et reste invisible tant qu’elle n’est pas approuvée.'],
+ suspNote:['هذه القاعة موقوفة ولا تظهر للزبائن. تواصل مع إدارة قاعتي.','Cette salle est suspendue et invisible. Contactez l’équipe Qaati.'],
+ eoName:['اكتب اسم القاعة (3 أحرف على الأقل).','Saisissez le nom de la salle (3 caractères minimum).'],eoWilaya:['اختر الولاية.','Choisissez la wilaya.'],
+ eoCommune:['اكتب البلدية أو الحي.','Saisissez la commune ou le quartier.'],eoCap:['اكتب سعة بين 20 و5000.','Saisissez une capacité entre 20 et 5000.'],
+ eoPrice:['اكتب سعراً بالدينار (10000 على الأقل).','Saisissez un prix en dinars (10000 minimum).'],eoPhone:['اكتب رقم هاتف جزائرياً صحيحاً.','Saisissez un numéro de téléphone algérien valide.'],
+ eoEvents:['اختر مناسبة واحدة على الأقل.','Choisissez au moins un événement.'],
+ tHallAdded:['أُضيفت القاعة وهي قيد المراجعة','Salle ajoutée, en cours de validation'],tHallSaved:['تم حفظ التعديلات','Modifications enregistrées'],
+ newReq:['{0} طلب جديد','{0} nouvelle(s) demande(s)'],
+ viewAsGuest:['عرض كما يراها الزبون','Voir comme un client'],reqs:['طلبات الحجز','Demandes de réservation'],noReqs:['لا توجد طلبات بعد.','Aucune demande pour le moment.'],
+ lName:['الاسم','Nom'],lPhone:['الهاتف','Téléphone'],lNotes:['ملاحظات','Remarques'],accept:['تأكيد الحجز','Confirmer'],reject:['رفض','Refuser'],
+ cancelBk:['إلغاء الحجز المؤكد','Annuler la réservation confirmée'],
+ blockedDates:['تواريخ مغلقة','Dates fermées'],blockedHint:['أغلق تاريخاً حجزه الزبون عندك مباشرة أو لأي سبب آخر.','Fermez une date réservée directement chez vous ou pour toute autre raison.'],
+ blockDate:['تاريخ للإغلاق','Date à fermer'],blockBtn:['إغلاق التاريخ','Fermer la date'],reopen:['إعادة فتح {0}','Rouvrir {0}'],
+ delHall:['حذف القاعة','Supprimer la salle'],confirmDel:['تأكيد حذف القاعة وكل طلباتها','Confirmer la suppression (salle et demandes)'],addAnother:['إضافة قاعة أخرى','Ajouter une autre salle'],
+ tHallDeleted:['تم حذف القاعة','Salle supprimée'],tBusy:['هذا التاريخ مغلق أو محجوز مسبقاً','Cette date est déjà fermée ou réservée'],
+ tAlreadyBooked:['في هذا التاريخ حجز مؤكد','Une réservation confirmée existe à cette date'],
+ tAccepted:['تم تأكيد الحجز','Réservation confirmée'],tAcceptedN:['تم التأكيد، ورُفضت {0} طلبات أخرى لنفس التاريخ','Confirmée ; {0} autre(s) demande(s) pour la même date refusée(s)'],
+ tRejected:['تم رفض الطلب','Demande refusée'],tOwnerCancelled:['أُلغي الحجز','Réservation annulée'],
+ tPickDate:['اختر تاريخاً أولاً','Choisissez d’abord une date'],tPast:['لا يمكن إغلاق تاريخ مضى','Impossible de fermer une date passée'],
+ tAlready:['هذا التاريخ مغلق مسبقاً','Cette date est déjà fermée'],tClosed:['أُغلق {0}','Date fermée : {0}'],tReopened:['أُعيد فتح التاريخ','Date rouverte'],
+ tSaveFail:['تعذّر الحفظ. حاول مرة أخرى.','Enregistrement impossible. Réessayez.'],tPhotoFail:['تعذّر قراءة الصورة','Impossible de lire l’image'],tUploadFail:['تعذّر رفع الصورة','Échec de l’envoi de la photo'],
+ stPending:['قيد الانتظار','En attente'],stConfirmed:['مؤكد','Confirmée'],stRejected:['مرفوض','Refusée'],stCancelled:['ملغى','Annulée']
+};
+var t=function(k){var e=I[k];if(!e)return String(k);var v=e[isFr()?1:0];for(var i=1;i<arguments.length;i++)v=v.split('{'+(i-1)+'}').join(String(arguments[i]));return v};
+
+/* ---------- reference data ---------- */
+var WIL=[['01','أدرار','Adrar'],['02','الشلف','Chlef'],['03','الأغواط','Laghouat'],['04','أم البواقي','Oum El Bouaghi'],['05','باتنة','Batna'],['06','بجاية','Béjaïa'],['07','بسكرة','Biskra'],['08','بشار','Béchar'],['09','البليدة','Blida'],['10','البويرة','Bouira'],['11','تمنراست','Tamanrasset'],['12','تبسة','Tébessa'],['13','تلمسان','Tlemcen'],['14','تيارت','Tiaret'],['15','تيزي وزو','Tizi Ouzou'],['16','الجزائر','Alger'],['17','الجلفة','Djelfa'],['18','جيجل','Jijel'],['19','سطيف','Sétif'],['20','سعيدة','Saïda'],['21','سكيكدة','Skikda'],['22','سيدي بلعباس','Sidi Bel Abbès'],['23','عنابة','Annaba'],['24','قالمة','Guelma'],['25','قسنطينة','Constantine'],['26','المدية','Médéa'],['27','مستغانم','Mostaganem'],['28','المسيلة','M’Sila'],['29','معسكر','Mascara'],['30','ورقلة','Ouargla'],['31','وهران','Oran'],['32','البيض','El Bayadh'],['33','إيليزي','Illizi'],['34','برج بوعريريج','Bordj Bou Arréridj'],['35','بومرداس','Boumerdès'],['36','الطارف','El Tarf'],['37','تندوف','Tindouf'],['38','تيسمسيلت','Tissemsilt'],['39','الوادي','El Oued'],['40','خنشلة','Khenchela'],['41','سوق أهراس','Souk Ahras'],['42','تيبازة','Tipaza'],['43','ميلة','Mila'],['44','عين الدفلى','Aïn Defla'],['45','النعامة','Naâma'],['46','عين تموشنت','Aïn Témouchent'],['47','غرداية','Ghardaïa'],['48','غليزان','Relizane'],['49','تيميمون','Timimoun'],['50','برج باجي مختار','Bordj Badji Mokhtar'],['51','أولاد جلال','Ouled Djellal'],['52','بني عباس','Béni Abbès'],['53','عين صالح','In Salah'],['54','عين قزام','In Guezzam'],['55','تقرت','Touggourt'],['56','جانت','Djanet'],['57','المغير','El M’Ghair'],['58','المنيعة','El Menia']];
+var wname=function(c){for(var i=0;i<WIL.length;i++)if(WIL[i][0]===c)return WIL[i][isFr()?2:1];return ''};
+/* الولايات المفتوحة للجمهور الآن (الجزائر العاصمة أولاً). اتركيها [] لفتح كل الولايات. */
+var LAUNCH=['16'];
+var isLaunch=function(c){return LAUNCH.length===0||LAUNCH.indexOf(c)>-1};
+var COMM=[['الجزائر الوسطى','Alger-Centre'],['سيدي امحمد','Sidi M’Hamed'],['المدنية','El Madania'],['بلوزداد','Belouizdad'],['باب الوادي','Bab El Oued'],['بولوغين','Bologhine'],['القصبة','Casbah'],['وادي قريش','Oued Koriche'],['بئر مراد رايس','Bir Mourad Raïs'],['الأبيار','El Biar'],['بوزريعة','Bouzaréah'],['بير خادم','Birkhadem'],['الحراش','El Harrach'],['براقي','Baraki'],['وادي السمار','Oued Smar'],['باب الزوار','Bab Ezzouar'],['الدار البيضاء','Dar El Beïda'],['حسين داي','Hussein Dey'],['القبة','Kouba'],['باش جراح','Bachdjerrah'],['دراريه','Draria'],['الدويرة','Douera'],['بابا حسن','Baba Hassen'],['الشراقة','Chéraga'],['أولاد فايت','Ouled Fayet'],['زرالدة','Zéralda'],['سطاوالي','Staoueli'],['الرويبة','Rouïba'],['الرغاية','Réghaïa'],['عين طاية','Aïn Taya'],['برج الكيفان','Bordj El Kiffan'],['برج البحري','Bordj El Bahri'],['المرادية','El Mouradia'],['حيدرة','Hydra'],['المحمدية','El Mohammadia'],['بن عكنون','Ben Aknoun'],['دالي إبراهيم','Dely Ibrahim']];
+/* القيم المخزنة بالعربية (تطابق قيود قاعدة البيانات)، والعرض يُترجم */
+var EVENTS=['عرس','خطوبة','عقيقة','ختان','تخرج','عيد ميلاد'];
+var EVF={'عرس':'Mariage','خطوبة':'Fiançailles','عقيقة':'Aqiqa','ختان':'Circoncision','تخرج':'Remise de diplômes','عيد ميلاد':'Anniversaire'};
+var FEATS=['موقف سيارات','مكيّفة','قاعة منفصلة للنساء','غرفة العروس','مطبخ مجهز','مولد كهربائي','حديقة خارجية','كراسي وطاولات مشمولة'];
+var FTF={'موقف سيارات':'Parking','مكيّفة':'Climatisée','قاعة منفصلة للنساء':'Espace séparé pour les femmes','غرفة العروس':'Salle de la mariée','مطبخ مجهز':'Cuisine équipée','مولد كهربائي':'Groupe électrogène','حديقة خارجية':'Jardin extérieur','كراسي وطاولات مشمولة':'Tables et chaises incluses'};
+var ev=function(x){return isFr()?(EVF[x]||x):x};
+var ft=function(x){return isFr()?(FTF[x]||x):x};
+var MONTHS=[['جانفي','فيفري','مارس','أفريل','ماي','جوان','جويلية','أوت','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre']];
+var DAYS=[['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi']];
+var DOWS=[['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'],['dim','lun','mar','mer','jeu','ven','sam']];
+var longDate=function(s){var p=String(s).split('-').map(Number);if(p.length<3||isNaN(p[0]))return esc(s);var dt=new Date(p[0],p[1]-1,p[2]);return DAYS[L()][dt.getDay()]+' '+p[2]+(isFr()&&p[2]===1?'er':'')+' '+MONTHS[L()][p[1]-1]+' '+p[0]};
+var STATUS={pending:['stPending','warn'],confirmed:['stConfirmed','ok'],rejected:['stRejected','bad'],cancelled:['stCancelled','muted']};
+var HALLST={pending:['stPendingHall','warn'],approved:['stApproved','ok'],suspended:['stSuspended','bad']};
+var money=function(n){return fmt(n)+' '+t('cur')};
+var waNum=function(p){p=String(p||'').replace(/\s/g,'');return /^0\d{8,9}$/.test(p)?'213'+p.slice(1):''};
+var waHref=function(p,msg){var n=waNum(p);return n?'https://wa.me/'+n+'?text='+encodeURIComponent(msg):''};
+var hueOf=function(id){var h=0,s=String(id);for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h%360};
+var photoOf=function(h){var u=h&&h.photo_url||'';return /^https:\/\//.test(u)?u:''};
+var cleanPhone=function(p){return String(p||'').replace(/\s/g,'')};
+
+/* ---------- Supabase ---------- */
+var cfg=window.QAATI_CONFIG||{};
+var configured=/^https:\/\/\S+$/.test(String(cfg.url||''))&&String(cfg.key||'').length>20;
+var libOk=!!(window.supabase&&window.supabase.createClient);
+var sb=null;
+if(configured&&libOk){
+  try{sb=window.supabase.createClient(cfg.url,cfg.key,{auth:{flowType:'pkce',detectSessionInUrl:true,persistSession:true,autoRefreshToken:true}})}catch(e){sb=null}
+}
+
+/* ---------- local storage (customer's own request codes) ---------- */
+var MYKEY='qaati.my.v2';
+function getMy(){try{var a=JSON.parse(localStorage.getItem(MYKEY)||'[]');return Array.isArray(a)?a.filter(function(x){return x&&typeof x.code==='string'&&typeof x.phone==='string'}):[]}catch(e){return []}}
+function setMy(a){try{localStorage.setItem(MYKEY,JSON.stringify(a.slice(-50)))}catch(e){}}
+function addMy(code,phone){var a=getMy();if(!a.some(function(x){return x.code===code}))a.push({code:code,phone:phone});setMy(a)}
+function phoneFor(code){var a=getMy();for(var i=0;i<a.length;i++)if(a[i].code===code)return a[i].phone;return ''}
+
+var tt;function toast(m){var el=$('#toast');el.textContent=m;el.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){el.classList.remove('on')},3200)}
+
+/* ---------- state ---------- */
+var now=new Date();
+function blankForm(){return {name:'',wilaya:'',commune:'',capacity:'',price:'',phone:'',desc:'',events:EVENTS.slice(),features:[],photoUrl:'',photoBlob:null,photoPrev:''}}
+var S={
+  f:{w:LAUNCH[0]||'',e:'',q:'',d:''},
+  halls:[],hallsState:'idle',busyIds:null,busyFor:'',
+  hallId:'',hall:null,hallState:'idle',busy:{},sel:'',cal:{y:now.getFullYear(),m:now.getMonth()},
+  bk:{name:'',phone:'',event:'',guests:'',notes:''},err:{},sending:false,
+  my:[],myState:'idle',tr:{code:'',phone:'',err:'',busy:false},flash:'',arm:'',
+  user:null,authReady:false,au:{mode:'login',email:'',pw:'',err:'',info:'',busy:false},
+  oh:[],ob:[],oState:'idle',adding:false,editing:'',of:blankForm(),oerr:{},saving:false
+};
+
+/* ---------- small pieces ---------- */
+function art(h){
+  var u=photoOf(h);
+  if(u)return '<img class="photo" src="'+esc(u)+'" alt="" loading="lazy">';
+  var hue=hueOf(h&&h.id||'x'),a='';
+  for(var i=0;i<6;i++){var x=i*70-10;a+='<path d="M'+(x+8)+' 200V120a27 27 0 0 1 54 0v80z" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>'}
+  return '<svg class="art" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="200" fill="hsl('+hue+' 42% 26%)"/><circle cx="330" cy="46" r="18" fill="hsl('+hue+' 60% 78%)" opacity=".85"/>'+a+'</svg>';
+}
+function fld(id,label,inner,err){return '<div class="fld"><label for="'+id+'">'+label+'</label>'+inner+(err?'<p class="err" role="alert">'+esc(err)+'</p>':'')+'</div>'}
+function wilSelect(id,attr,val,all){
+  var o='<option value="">'+(all?t('allWilayas'):t('pickWilaya'))+'</option>';
+  WIL.forEach(function(w){o+='<option value="'+w[0]+'"'+(w[0]===val?' selected':'')+'>'+w[0]+' - '+w[isFr()?2:1]+(isLaunch(w[0])?'':' ('+t('soon')+')')+'</option>'});
+  return '<select id="'+id+'" '+attr+'>'+o+'</select>';
+}
+function chipBtns(list,sel,k,label){return '<div class="chips">'+list.map(function(v){return '<button type="button" class="chip" data-a="tog" data-k="'+k+'" data-v="'+esc(v)+'" aria-pressed="'+(sel.indexOf(v)>-1)+'">'+esc(label(v))+'</button>'}).join('')+'</div>'}
+var chev=function(dir){return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+(dir==='r'?'M9 5l7 7-7 7':'M15 5l-7 7 7 7')+'"/></svg>'};
+var backChev=function(){return chev(isFr()?'l':'r')};
+var loadingBox=function(){return '<p class="hint" role="status">'+t('loading')+'</p>'};
+var errBox=function(act){return '<div class="empty"><p class="errbox" role="alert">'+t('eNet')+'</p><button type="button" class="btn ghost small" data-a="'+act+'">'+t('retry')+'</button></div>'};
+
+/* ---------- view: setup problem ---------- */
+function vSetup(){
+  if(!configured)return '<div class="empty"><h2>'+t('setupTitle')+'</h2><p class="hint">'+t('setupText')+'</p></div>';
+  return '<div class="empty"><h2>'+t('eNet')+'</h2><p class="hint">'+t('setupLib')+'</p></div>';
+}
+
+/* ---------- view: halls ---------- */
+function filtered(){var f=S.f,q=f.q.trim().toLowerCase();return S.halls.filter(function(h){
+  var hay=(String(h.name)+' '+String(h.commune)).toLowerCase();
+  return isLaunch(h.wilaya)&&(!f.w||h.wilaya===f.w)&&(!f.e||(h.events||[]).indexOf(f.e)>-1)&&(!q||hay.indexOf(q)>-1)&&(!f.d||!(S.busyIds&&S.busyIds[h.id]))})}
+function card(h){
+  return '<a class="card" href="#hall-'+esc(h.id)+'">'+art(h)+'<div class="body"><div class="row"><h3>'+esc(h.name)+'</h3>'+(S.f.d?'<span class="pill ok">'+t('availBadge')+'</span>':'')+'</div>'+
+  '<p class="loc">'+esc(wname(h.wilaya))+' · '+esc(h.commune)+'</p>'+
+  '<div class="row"><span class="count">'+t('upTo',fmt(h.capacity))+'</span><span class="price">'+money(h.price)+' <small>'+t('perNight')+'</small></span></div></div></a>'}
+function results(){
+  if(S.f.w&&!isLaunch(S.f.w))return '<div class="empty"><h3>'+t('soonTitle')+'</h3><p class="hint">'+t('soonHint')+'</p><a class="btn small" href="#owner">'+t('registerHall')+'</a></div>';
+  if(S.hallsState==='idle'||S.hallsState==='loading')return loadingBox();
+  if(S.hallsState==='err')return errBox('reloadhalls');
+  if(S.f.d&&S.busyIds===null)return loadingBox();
+  var l=filtered();
+  if(!l.length){
+    var inW=S.f.w?S.halls.some(function(h){return h.wilaya===S.f.w}):S.halls.length>0;
+    return '<div class="empty"><h3>'+t('noMatch')+'</h3><p class="hint">'+(inW?t('noMatchHint'):t('noHallsIn',esc(wname(S.f.w))))+'</p>'+
+    '<div class="actions"><button type="button" class="btn ghost small" data-a="resetf">'+t('resetF')+'</button>'+(inW?'':'<a class="btn small" href="#owner">'+t('registerHall')+'</a>')+'</div></div>';
+  }
+  return '<p class="count" id="cnt">'+t('countHalls',l.length)+'</p><div class="list">'+l.map(card).join('')+'</div>';
+}
+function vHalls(){
+  var f=S.f;
+  return '<div><h1>'+t('h1Halls')+'</h1><p class="lead">'+t('leadHalls')+'</p></div>'+
+  '<section class="sec" aria-label="'+t('fQuery')+'">'+
+  '<div class="grid2 stack">'+fld('f-w',t('fWilaya'),wilSelect('f-w','data-f="w"',f.w,true))+
+  fld('f-e',t('fEvent'),'<select id="f-e" data-f="e"><option value="">'+t('allEvents')+'</option>'+EVENTS.map(function(e){return '<option value="'+e+'"'+(e===f.e?' selected':'')+'>'+ev(e)+'</option>'}).join('')+'</select>')+'</div>'+
+  '<div class="grid2 stack">'+fld('f-d',t('fDate'),'<input type="date" id="f-d" data-f="d" min="'+todayIso()+'" value="'+esc(f.d)+'">')+
+  fld('f-q',t('fQuery'),'<input type="text" id="f-q" data-f="q" placeholder="'+t('phQuery')+'" value="'+esc(f.q)+'">')+'</div></section>'+
+  '<section id="results">'+results()+'</section>';
+}
+
+/* ---------- view: hall detail ---------- */
+function calHtml(){
+  var y=S.cal.y,m=S.cal.m,start=isFr()?1:6,lead=(new Date(y,m,1).getDay()-start+7)%7,dim=new Date(y,m+1,0).getDate(),tdy=todayIso(),c='';
+  for(var i=0;i<lead;i++)c+='<span></span>';
+  for(var d=1;d<=dim;d++){
+    var ds=iso(y,m,d),past=ds<tdy,busy=!past&&!!S.busy[ds];
+    c+='<button type="button" class="day'+(past?' past':'')+(busy?' busy':'')+(ds===S.sel?' sel':'')+(ds===tdy?' today':'')+'" data-a="pickday" data-d="'+ds+'"'+((past||busy)?' disabled':'')+' aria-label="'+longDate(ds)+(busy?' - '+t('legBusy'):'')+'" aria-pressed="'+(ds===S.sel)+'">'+d+'</button>';
+  }
+  var cur=now.getFullYear()*12+now.getMonth(),at=y*12+m,dw='';
+  for(var j=0;j<7;j++)dw+='<span>'+DOWS[L()][(start+j)%7]+'</span>';
+  return '<div class="cal-head"><button type="button" data-a="mprev" aria-label="'+t('prevM')+'"'+(at<=cur?' disabled':'')+'>'+chev(isFr()?'l':'r')+'</button><b>'+MONTHS[L()][m]+' '+y+'</b><button type="button" data-a="mnext" aria-label="'+t('nextM')+'"'+(at-cur>=18?' disabled':'')+'>'+chev(isFr()?'r':'l')+'</button></div>'+
+  '<div class="dows">'+dw+'</div><div class="days">'+c+'</div>'+
+  '<div class="legend"><span><i style="background:var(--brand)"></i>'+t('legYours')+'</span><span><i style="background:var(--bad-bg)"></i>'+t('legBusy')+'</span><span><i style="border:1px solid var(--line)"></i>'+t('legFree')+'</span></div>';
+}
+function selText(){return S.sel?'<span class="seldate">'+longDate(S.sel)+'</span>':'<span class="hint">'+t('noDate')+'</span>'}
+function vHall(){
+  var backLink='<a class="back" href="#halls">'+backChev()+t('back')+'</a>';
+  if(S.hallState==='loading'||S.hallState==='idle')return backLink+loadingBox();
+  if(S.hallState==='err')return backLink+errBox('reloadhall');
+  var h=S.hall;
+  if(S.hallState==='nf'||!h)return backLink+'<div class="empty"><h3>'+t('notFound')+'</h3><p class="hint">'+t('notFoundHint')+'</p></div>';
+  var e=S.err,b=S.bk,evs=h.events||[],fts=h.features||[],ev0=evs.indexOf(b.event)>-1?b.event:(evs[0]||'');
+  return backLink+
+  '<div class="media">'+art(h)+'</div>'+
+  '<div><h1>'+esc(h.name)+'</h1><p class="loc">'+esc(wname(h.wilaya))+' · '+esc(h.commune)+'</p></div>'+
+  '<div class="facts"><div><span>'+t('capacity')+'</span><b>'+t('capVal',fmt(h.capacity))+'</b></div><div><span>'+t('nightPrice')+'</span><b style="color:var(--brass)">'+money(h.price)+'</b></div></div>'+
+  (h.description?'<p>'+esc(h.description)+'</p>':'')+
+  (h.phone&&waNum(h.phone)?'<div class="actions"><span class="chip">'+t('hallPhone')+': <bdi dir="ltr">'+esc(h.phone)+'</bdi></span><a class="btn ghost small" href="'+esc(waHref(h.phone,t('waMsgHall',h.name)))+'" target="_blank" rel="noopener">'+t('waOwner')+'</a></div>':'')+
+  '<section class="sec"><h2>'+t('events')+'</h2><div class="chips">'+evs.map(function(x){return '<span class="chip">'+esc(ev(x))+'</span>'}).join('')+'</div>'+
+  (fts.length?'<h2>'+t('features')+'</h2><div class="chips">'+fts.map(function(x){return '<span class="chip">'+esc(ft(x))+'</span>'}).join('')+'</div>':'')+'</section>'+
+  '<section class="sec"><h2>'+t('pickDate')+'</h2><div class="cal" id="calbox">'+calHtml()+'</div>'+
+  '<p id="seldate">'+selText()+'</p>'+(e.date?'<p class="err" role="alert">'+esc(e.date)+'</p>':'')+'</section>'+
+  '<form class="sec" id="bkform" novalidate><h2>'+t('yourInfo')+'</h2>'+
+  fld('b-name',t('fullName'),'<input type="text" id="b-name" data-bk="name" autocomplete="name" maxlength="80" value="'+esc(b.name)+'">',e.name)+
+  fld('b-phone',t('phone'),'<input type="tel" id="b-phone" data-bk="phone" inputmode="tel" autocomplete="tel" placeholder="0550 12 34 56" value="'+esc(b.phone)+'">',e.phone)+
+  '<div class="grid2 stack">'+fld('b-event',t('eventType'),'<select id="b-event" data-bk="event">'+evs.map(function(x){return '<option value="'+esc(x)+'"'+(x===ev0?' selected':'')+'>'+esc(ev(x))+'</option>'}).join('')+'</select>')+
+  fld('b-guests',t('guests'),'<input type="number" id="b-guests" data-bk="guests" inputmode="numeric" min="10" max="'+esc(h.capacity)+'" value="'+esc(b.guests)+'">',e.guests)+'</div>'+
+  fld('b-notes',t('notesOpt'),'<textarea id="b-notes" data-bk="notes" maxlength="500" placeholder="'+t('phNotes')+'">'+esc(b.notes)+'</textarea>')+
+  (e.form?'<p class="errbox" role="alert">'+esc(e.form)+'</p>':'')+
+  '<button type="submit" class="btn block"'+(S.sending?' disabled':'')+'>'+(S.sending?t('sending'):t('send'))+'</button>'+
+  '<p class="hint">'+t('sendHint')+'</p></form>';
+}
+
+/* ---------- view: my bookings ---------- */
+function vBookings(){
+  var head='<div><h1>'+t('myBookings')+'</h1><p class="lead">'+t('myBookingsLead')+'</p></div>',body;
+  if(S.myState==='loading'||S.myState==='idle')body=loadingBox();
+  else if(S.myState==='err')body=errBox('reloadmy');
+  else if(!S.my.length)body='<div class="empty"><h3>'+t('noBookings')+'</h3><p class="hint">'+t('noBookingsHint')+'</p><a class="btn small" href="#halls">'+t('browse')+'</a></div>';
+  else body='<div class="list">'+S.my.map(function(r){
+    var st=STATUS[r.r_status]||STATUS.pending,live=r.r_status==='pending'||r.r_status==='confirmed';
+    return '<article class="item'+(S.flash===r.r_code?' flash':'')+'"><div class="row"><h3><a href="#hall-'+esc(r.r_hall_id)+'">'+esc(r.r_hall)+'</a></h3><span class="pill '+st[1]+'">'+t(st[0])+'</span></div>'+
+    '<dl><dt>'+t('lDate')+'</dt><dd>'+longDate(r.r_date)+'</dd><dt>'+t('lEvent')+'</dt><dd>'+esc(t('evGuests',ev(r.r_event),r.r_guests))+'</dd><dt>'+t('lWilaya')+'</dt><dd>'+esc(wname(r.r_wilaya))+'</dd></dl>'+
+    '<p class="code">'+esc(t('reqNo',r.r_code))+'</p>'+
+    (r.r_status==='pending'?'<p class="hint">'+t('pendingNote')+'</p>':'')+
+    (r.r_status==='confirmed'?'<p class="hint">'+t('confirmedNote')+'</p>':'')+
+    (r.r_status==='rejected'?'<p class="hint">'+t('rejectedNote')+'</p>':'')+
+    (live?'<div class="actions">'+(waNum(r.r_hall_phone)?'<a class="btn ghost small" href="'+esc(waHref(r.r_hall_phone,t('waMsgCust',r.r_hall,longDate(r.r_date),r.r_code)))+'" target="_blank" rel="noopener">'+t('waOwner')+'</a>':'')+'<button type="button" class="btn danger small" data-a="cancelb" data-id="'+esc(r.r_code)+'">'+(S.arm==='c'+r.r_code?t('confirmCancel'):t('cancelReq'))+'</button></div>':'')+'</article>';
+  }).join('')+'</div>';
+  var tr=S.tr,trk='<form class="sec" id="trform" novalidate><h2>'+t('trackTitle')+'</h2><p class="hint">'+t('trackHint')+'</p>'+
+    '<div class="grid2 stack">'+fld('t-code',t('reqCode'),'<input type="text" id="t-code" data-tr="code" autocomplete="off" autocapitalize="characters" placeholder="Q-XXXXXXXX" value="'+esc(tr.code)+'">')+
+    fld('t-phone',t('phone'),'<input type="tel" id="t-phone" data-tr="phone" inputmode="tel" placeholder="0550 12 34 56" value="'+esc(tr.phone)+'">')+'</div>'+
+    (tr.err?'<p class="err" role="alert">'+esc(tr.err)+'</p>':'')+
+    '<button type="submit" class="btn ghost"'+(tr.busy?' disabled':'')+'>'+(tr.busy?t('loading'):t('trackBtn'))+'</button></form>';
+  return head+body+'<p class="note">'+t('localNote')+'</p>'+trk;
+}
+
+/* ---------- view: owner ---------- */
+function vAuth(){
+  var a=S.au,m=a.mode,title=m==='recover'?t('recoverTitle'):t('authTitle'),lead=m==='recover'?'':t('authLead');
+  var submit={login:t('login'),signup:t('signup'),forgot:t('sendReset'),recover:t('saveNewPw')}[m];
+  var emailF=m==='recover'?'':fld('a-email',t('email'),'<input type="email" id="a-email" data-au="email" autocomplete="email" inputmode="email" value="'+esc(a.email)+'">');
+  var pwF=m==='forgot'?'':fld('a-pw',m==='recover'?t('newPassword'):t('password'),'<input type="password" id="a-pw" data-au="pw" autocomplete="'+(m==='login'?'current-password':'new-password')+'" value="'+esc(a.pw)+'">');
+  var links='';
+  if(m==='login')links='<button type="button" class="linkbtn" data-a="aumode" data-m="forgot">'+t('forgot')+'</button><button type="button" class="linkbtn" data-a="aumode" data-m="signup">'+t('noAcc')+'</button>';
+  else if(m==='signup'||m==='forgot')links='<button type="button" class="linkbtn" data-a="aumode" data-m="login">'+t('haveAcc')+'</button>';
+  return '<div><h1>'+title+'</h1>'+(lead?'<p class="lead">'+lead+'</p>':'')+'</div>'+
+  '<form class="sec" id="authform" novalidate>'+emailF+pwF+
+  (a.err?'<p class="errbox" role="alert">'+esc(a.err)+'</p>':'')+(a.info?'<p class="okbox" role="status">'+esc(a.info)+'</p>':'')+
+  '<button type="submit" class="btn block"'+(a.busy?' disabled':'')+'>'+(a.busy?t('loading'):submit)+'</button>'+
+  '<div class="actions">'+links+'</div></form>';
+}
+function ownerForm(){
+  var f=S.of,e=S.oerr,photo=f.photoPrev||(/^https:\/\//.test(f.photoUrl)?f.photoUrl:'');
+  return '<form class="sec" id="hallform" novalidate><h2>'+t('hallInfo')+'</h2>'+
+  (S.editing?'<p class="hint">'+t('editWarn')+'</p>':'')+
+  fld('o-name',t('hallName'),'<input type="text" id="o-name" data-of="name" maxlength="80" value="'+esc(f.name)+'">',e.name)+
+  '<div class="grid2 stack">'+fld('o-wilaya',t('fWilaya'),wilSelect('o-wilaya','data-of="wilaya"',f.wilaya,false),e.wilaya)+
+  fld('o-commune',t('commune'),'<input type="text" id="o-commune" data-of="commune" maxlength="60" list="dl-communes" autocomplete="off" value="'+esc(f.commune)+'">'+(f.wilaya==='16'?'<datalist id="dl-communes">'+COMM.map(function(c){return '<option value="'+esc(c[L()])+'"></option>'}).join('')+'</datalist>':''),e.commune)+'</div>'+
+  (f.wilaya&&!isLaunch(f.wilaya)?'<p class="hint">'+t('soonOwnerHint')+'</p>':'')+
+  '<div class="grid2 stack">'+fld('o-cap',t('maxGuests'),'<input type="number" id="o-cap" data-of="capacity" inputmode="numeric" value="'+esc(f.capacity)+'">',e.capacity)+
+  fld('o-price',t('priceNight'),'<input type="number" id="o-price" data-of="price" inputmode="numeric" value="'+esc(f.price)+'">',e.price)+'</div>'+
+  fld('o-phone',t('hallPhone'),'<input type="tel" id="o-phone" data-of="phone" inputmode="tel" placeholder="0550 12 34 56" value="'+esc(f.phone)+'">',e.phone)+
+  '<div class="fld"><span class="lbl">'+t('acceptedEvents')+'</span>'+chipBtns(EVENTS,f.events,'events',ev)+(e.events?'<p class="err" role="alert">'+esc(e.events)+'</p>':'')+'</div>'+
+  '<div class="fld"><span class="lbl">'+t('features')+'</span>'+chipBtns(FEATS,f.features,'features',ft)+'</div>'+
+  fld('o-desc',t('descOpt'),'<textarea id="o-desc" data-of="desc" maxlength="600">'+esc(f.desc)+'</textarea>')+
+  '<div class="fld"><label for="o-photo">'+t('photoOpt')+'</label><input type="file" id="o-photo" accept="image/jpeg,image/png,image/webp">'+
+  (photo?'<img class="photo-prev" src="'+esc(photo)+'" alt="'+t('photoPrev')+'"><button type="button" class="btn danger small" data-a="rmphoto">'+t('removePhoto')+'</button>':'')+'</div>'+
+  '<div class="actions"><button type="submit" class="btn"'+(S.saving?' disabled':'')+'>'+(S.saving?t('saving'):t('saveHall'))+'</button>'+(S.oh.length?'<button type="button" class="btn ghost" data-a="cancelhall"'+(S.saving?' disabled':'')+'>'+t('cancel')+'</button>':'')+'</div></form>';
+}
+function ownerHall(h){
+  var reqs=S.ob.filter(function(b){return b.hall_id===h.id}),pend=reqs.filter(function(b){return b.status==='pending'}).length,hs=HALLST[h.status]||HALLST.pending;
+  var blocked=(h.blocked_dates||[]).slice().sort();
+  return '<article class="item"><div class="row"><h3>'+esc(h.name)+'</h3><div class="chips"><span class="pill '+hs[1]+'">'+t(hs[0])+'</span>'+(pend?'<span class="pill warn">'+t('newReq',pend)+'</span>':'')+(!isLaunch(h.wilaya)?'<span class="pill muted">'+t('soon')+'</span>':'')+'</div></div>'+
+  (h.status==='pending'?'<p class="hint">'+t('reviewNote')+'</p>':'')+(h.status==='suspended'?'<p class="errbox">'+t('suspNote')+'</p>':'')+
+  '<p class="loc">'+esc(wname(h.wilaya))+' · '+esc(h.commune)+' · '+t('capVal',fmt(h.capacity))+' · '+money(h.price)+'</p>'+
+  '<div class="actions">'+(h.status==='approved'?'<a class="btn ghost small" href="#hall-'+esc(h.id)+'">'+t('viewAsGuest')+'</a>':'')+'<button type="button" class="btn ghost small" data-a="edithall" data-id="'+esc(h.id)+'">'+t('editHall')+'</button></div>'+
+  '<div class="sub"><h3>'+t('reqs')+'</h3>'+(reqs.length?reqs.map(function(b){
+    var st=STATUS[b.status]||STATUS.pending;
+    return '<div class="item"><div class="row"><b>'+longDate(b.event_date)+'</b><span class="pill '+st[1]+'">'+t(st[0])+'</span></div>'+
+    '<dl><dt>'+t('lName')+'</dt><dd>'+esc(b.customer_name)+'</dd><dt>'+t('lPhone')+'</dt><dd><bdi dir="ltr">'+esc(b.customer_phone)+'</bdi></dd><dt>'+t('lEvent')+'</dt><dd>'+esc(t('evGuests',ev(b.event_type),b.guests))+'</dd>'+(b.notes?'<dt>'+t('lNotes')+'</dt><dd>'+esc(b.notes)+'</dd>':'')+'</dl>'+
+    (b.status==='pending'||b.status==='confirmed'?'<div class="actions"><a class="btn ghost small" href="'+esc(waHref(b.customer_phone,t('waMsgOwner',b.customer_name,h.name,longDate(b.event_date))))+'" target="_blank" rel="noopener">'+t('waCustomer')+'</a></div>':'')+
+    (b.status==='pending'?'<div class="actions"><button type="button" class="btn small" data-a="accept" data-id="'+esc(b.id)+'">'+t('accept')+'</button><button type="button" class="btn danger small" data-a="reject" data-id="'+esc(b.id)+'">'+t('reject')+'</button></div>':'')+
+    (b.status==='confirmed'?'<div class="actions"><button type="button" class="btn danger small" data-a="ocancel" data-id="'+esc(b.id)+'">'+(S.arm==='o'+b.id?t('confirmCancel'):t('cancelBk'))+'</button></div>':'')+'</div>';
+  }).join(''):'<p class="hint">'+t('noReqs')+'</p>')+'</div>'+
+  '<div class="sub"><h3>'+t('blockedDates')+'</h3><p class="hint">'+t('blockedHint')+'</p>'+
+  '<div class="blocked"><input type="date" id="blk-'+esc(h.id)+'" min="'+todayIso()+'" style="max-width:200px" aria-label="'+t('blockDate')+'"><button type="button" class="btn ghost small" data-a="block" data-id="'+esc(h.id)+'">'+t('blockBtn')+'</button></div>'+
+  (blocked.length?'<div class="chips">'+blocked.map(function(d){return '<button type="button" class="chip" data-a="unblock" data-id="'+esc(h.id)+'" data-d="'+esc(d)+'" aria-label="'+esc(t('reopen',longDate(d)))+'">'+longDate(d)+' ✕</button>'}).join('')+'</div>':'')+'</div>'+
+  '<div class="actions"><button type="button" class="btn danger small" data-a="delhall" data-id="'+esc(h.id)+'">'+(S.arm==='h'+h.id?t('confirmDel'):t('delHall'))+'</button></div></article>';
+}
+function vOwner(){
+  if(!S.authReady)return loadingBox();
+  if(S.au.mode==='recover')return vAuth();
+  if(!S.user)return vAuth();
+  var head='<div><h1>'+t('ownerTitle')+'</h1><p class="lead">'+t('ownerLead')+'</p></div>'+
+    '<div class="who"><span>'+t('loggedAs')+' <bdi dir="ltr">'+esc(S.user.email||'')+'</bdi></span><button type="button" class="btn ghost small" data-a="logout">'+t('logout')+'</button></div>';
+  if(S.oState==='idle'||S.oState==='loading')return head+loadingBox();
+  if(S.oState==='err')return head+errBox('reloadowner');
+  if(!S.oh.length||S.adding)return head+ownerForm();
+  return head+'<div class="list">'+S.oh.map(ownerHall).join('')+'</div><button type="button" class="btn ghost block" data-a="addhall">'+t('addAnother')+'</button>';
+}
+
+/* ---------- rendering + router ---------- */
+var app=$('#app'),cur='';
+function view(){var h=location.hash.slice(1)||'halls';return h.indexOf('hall-')===0?'hall':(h==='bookings'||h==='owner'?h:'halls')}
+function render(keepScroll){
+  var ae=document.activeElement,fid=(ae&&ae!==document.body&&ae.id)?ae.id:'',ss=null,se=null,y=window.scrollY;
+  try{if(ae&&typeof ae.selectionStart==='number'){ss=ae.selectionStart;se=ae.selectionEnd}}catch(e){}
+  var v=view(),html;
+  try{
+    html=!sb?vSetup():v==='hall'?vHall():v==='bookings'?vBookings():v==='owner'?vOwner():vHalls();
+  }catch(err){
+    if(window.console)console.error(err);
+    html='<div class="empty"><h3>'+t('eNet')+'</h3></div>';
+  }
+  app.innerHTML=html;
+  var tab=v==='hall'?'halls':v;
+  document.querySelectorAll('.tabs a').forEach(function(a){if(a.dataset.tab===tab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+  if(fid){var el=document.getElementById(fid);if(el&&el!==document.activeElement){try{el.focus({preventScroll:true});if(ss!=null&&typeof el.setSelectionRange==='function'&&/^(text|tel|password|search)$/.test(el.type)&&el.tagName==='INPUT')el.setSelectionRange(ss,se)}catch(e){}}}
+  window.scrollTo(0,keepScroll===false?0:y);
+}
+function refreshResults(){var r=$('#results');if(r)r.innerHTML=results()}
+function route(){
+  var h=location.hash.slice(1)||'halls',changed=h!==cur;
+  if(changed){cur=h;S.arm='';enter(view(),h)}
+  render(!changed);
+}
+function enter(v,h){
+  if(!sb)return;
+  if(v==='halls'){if(S.hallsState!=='ok'&&S.hallsState!=='loading')loadHalls()}
+  else if(v==='hall'){
+    var id=h.slice(5);S.hallId=id;S.hall=null;S.busy={};S.sel='';S.err={};S.sending=false;S.cal={y:now.getFullYear(),m:now.getMonth()};
+    loadHall(id);
+  }
+  else if(v==='bookings')loadMy();
+  else if(v==='owner'&&S.user)loadOwner();
+}
+window.addEventListener('hashchange',route);
+
+/* ---------- data: halls ---------- */
+function loadHalls(){
+  S.hallsState='loading';
+  sb.from('halls_public').select('*').order('created_at',{ascending:false}).limit(500).then(function(r){
+    if(r.error){S.hallsState='err'}else{S.halls=r.data||[];S.hallsState='ok'}
+    if(view()==='halls')render();
+  },function(){S.hallsState='err';if(view()==='halls')render()});
+}
+function loadBusyOn(d){
+  S.busyIds=null;S.busyFor=d;
+  if(!d){refreshResults();return}
+  refreshResults();
+  sb.rpc('busy_halls_on',{p_date:d}).then(function(r){
+    if(S.busyFor!==d)return;
+    S.busyIds={};
+    if(r.error)toast(t('eNet'));else(r.data||[]).forEach(function(x){S.busyIds[scalar(x)]=true});
+    refreshResults();
+  },function(){if(S.busyFor!==d)return;S.busyIds={};toast(t('eNet'));refreshResults()});
+}
+function loadHall(id){
+  if(!UUID.test(id)){S.hallState='nf';return}
+  S.hallState='loading';
+  Promise.all([sb.from('halls_public').select('*').eq('id',id).maybeSingle(),sb.rpc('busy_dates',{p_hall:id})]).then(function(rs){
+    if(S.hallId!==id)return;
+    var a=rs[0],b=rs[1];
+    if(a.error||b.error){S.hallState='err'}
+    else if(!a.data){S.hallState='nf'}
+    else{S.hall=a.data;S.busy={};(b.data||[]).forEach(function(x){S.busy[scalar(x)]=true});S.hallState='ok'}
+    if(view()==='hall')render();
+  },function(){if(S.hallId!==id)return;S.hallState='err';if(view()==='hall')render()});
+}
+function updateCal(){var c=$('#calbox');if(c){c.innerHTML=calHtml();var s=$('#seldate');if(s)s.innerHTML=selText()}}
+
+/* ---------- data: my bookings ---------- */
+function loadMy(){
+  var my=getMy();
+  if(!my.length){S.my=[];S.myState='ok';return}
+  S.myState='loading';
+  var byPhone={};
+  my.forEach(function(x){(byPhone[x.phone]=byPhone[x.phone]||[]).push(x.code)});
+  var ps=Object.keys(byPhone).map(function(ph){return sb.rpc('track_bookings',{p_phone:ph,p_codes:byPhone[ph]})});
+  Promise.all(ps).then(function(rs){
+    var rows=[],bad=false;
+    rs.forEach(function(r){if(r.error)bad=true;else rows=rows.concat(r.data||[])});
+    rows.sort(function(a,b){return a.r_created<b.r_created?1:-1});
+    S.my=rows;S.myState=(bad&&!rows.length)?'err':'ok';
+    if(view()==='bookings')render();
+  },function(){S.myState='err';if(view()==='bookings')render()});
+}
+
+/* ---------- data: owner ---------- */
+function loadOwner(){
+  if(!S.user)return;
+  S.oState='loading';
+  var uid=S.user.id;
+  sb.from('halls').select('*').order('created_at',{ascending:false}).then(function(r){
+    if(!S.user||S.user.id!==uid)return;
+    if(r.error){S.oState='err';if(view()==='owner')render();return}
+    S.oh=r.data||[];
+    var ids=S.oh.map(function(h){return h.id});
+    if(!ids.length){S.ob=[];S.oState='ok';if(view()==='owner')render();return}
+    return sb.from('bookings').select('*').in('hall_id',ids).order('event_date',{ascending:true}).limit(1000).then(function(r2){
+      if(!S.user||S.user.id!==uid)return;
+      if(r2.error){S.oState='err'}else{S.ob=r2.data||[];S.oState='ok'}
+      if(view()==='owner')render();
+    });
+  }).then(null,function(){S.oState='err';if(view()==='owner')render()});
+}
+var findOH=function(id){for(var i=0;i<S.oh.length;i++)if(S.oh[i].id===id)return S.oh[i];return null};
+var findOB=function(id){for(var i=0;i<S.ob.length;i++)if(S.ob[i].id===id)return S.ob[i];return null};
+
+/* ---------- auth ---------- */
+var baseUrl=function(){return location.href.split('#')[0].split('?')[0]};
+var hadCode=/[?&]code=/.test(location.search);
+function setUser(sess){
+  var u=(sess&&sess.user)||null,changed=(u?u.id:'')!==(S.user?S.user.id:'');
+  S.user=u;
+  if(changed){S.oh=[];S.ob=[];S.oState='idle';S.adding=false;S.editing='';S.of=blankForm();S.oerr={};S.arm='';if(u&&view()==='owner')loadOwner()}
+}
+function authErr(e){
+  var m=String(e&&e.message||'').toLowerCase();
+  if(m.indexOf('invalid login')>-1)return t('eLogin');
+  if(m.indexOf('not confirmed')>-1)return t('eConfirm');
+  if(m.indexOf('already registered')>-1||m.indexOf('already been registered')>-1)return t('eExists');
+  if(m.indexOf('rate limit')>-1||m.indexOf('too many')>-1||m.indexOf('security purposes')>-1)return t('eAuthRate');
+  if(m.indexOf('password')>-1&&(m.indexOf('least')>-1||m.indexOf('weak')>-1||m.indexOf('short')>-1))return t('ePw');
+  return t('eNet');
+}
+function initAuth(){
+  sb.auth.onAuthStateChange(function(ev,sess){
+    if(ev==='TOKEN_REFRESHED')return;
+    /* لا نستعمل await على Supabase داخل هذه الدالة: نؤجّل العمل */
+    setTimeout(function(){
+      if(ev==='PASSWORD_RECOVERY'){S.au.mode='recover';S.au.err='';S.au.info=''}
+      setUser(sess);S.authReady=true;
+      if(hadCode&&/[?&]code=/.test(location.search)&&(ev==='SIGNED_IN'||ev==='INITIAL_SESSION'||ev==='PASSWORD_RECOVERY')){
+        try{history.replaceState(null,'',location.pathname+location.hash)}catch(e){}
+      }
+      if((ev==='SIGNED_IN'||ev==='PASSWORD_RECOVERY')&&hadCode&&view()!=='owner'){hadCode=false;location.hash='owner';return}
+      render();
+    },0);
+  });
+  sb.auth.getSession().then(function(r){
+    if(!S.authReady){setUser(r&&r.data&&r.data.session);S.authReady=true;render()}
+  },function(){if(!S.authReady){S.authReady=true;render()}});
+}
+function doAuth(){
+  var a=S.au;if(a.busy)return;
+  a.err='';a.info='';
+  var email=a.email.trim();
+  if(a.mode!=='recover'&&!/^\S+@\S+\.\S+$/.test(email)){a.err=t('eEmail');render();return}
+  if(a.mode==='login'&&!a.pw){a.err=t('ePwEmpty');render();return}
+  if((a.mode==='signup'||a.mode==='recover')&&a.pw.length<8){a.err=t('ePw');render();return}
+  a.busy=true;render();
+  var done=function(){a.busy=false;render()},fail=function(){a.err=t('eNet');done()};
+  if(a.mode==='login'){
+    sb.auth.signInWithPassword({email:email,password:a.pw}).then(function(r){
+      if(r.error)a.err=authErr(r.error);else{a.pw='';toast(t('tLogged'))}
+      done();
+    },fail);
+  }else if(a.mode==='signup'){
+    sb.auth.signUp({email:email,password:a.pw,options:{emailRedirectTo:baseUrl()}}).then(function(r){
+      if(r.error)a.err=authErr(r.error);
+      else if(r.data&&r.data.session){a.pw='';toast(t('tLogged'))}
+      else if(r.data&&r.data.user&&r.data.user.identities&&r.data.user.identities.length===0)a.err=t('eExists');
+      else{a.info=t('iConfirm');a.mode='login';a.pw=''}
+      done();
+    },fail);
+  }else if(a.mode==='forgot'){
+    sb.auth.resetPasswordForEmail(email,{redirectTo:baseUrl()}).then(function(r){
+      if(r.error&&authErr(r.error)!==t('eNet'))a.err=authErr(r.error);else a.info=t('iReset');
+      done();
+    },fail);
+  }else if(a.mode==='recover'){
+    sb.auth.updateUser({password:a.pw}).then(function(r){
+      if(r.error)a.err=authErr(r.error);else{a.pw='';a.mode='login';toast(t('tPwSaved'));if(S.user&&view()==='owner')loadOwner()}
+      done();
+    },fail);
+  }
+}
+
+/* ---------- photos ---------- */
+function compress(file,cb){
+  if(!file||file.size>20*1024*1024){cb(null);return}
+  var fr=new FileReader();
+  fr.onload=function(){
+    var img=new Image();
+    img.onload=function(){
+      var k=Math.min(1,1200/Math.max(img.width,img.height)),c=document.createElement('canvas');
+      c.width=Math.max(1,Math.round(img.width*k));c.height=Math.max(1,Math.round(img.height*k));
+      var ctx=c.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);
+      if(c.toBlob)c.toBlob(function(b){cb(b||null)},'image/jpeg',.8);else cb(null);
+    };
+    img.onerror=function(){cb(null)};
+    img.src=fr.result;
+  };
+  fr.onerror=function(){cb(null)};
+  fr.readAsDataURL(file);
+}
+function removePhotoUrl(url){
+  try{
+    var i=String(url||'').indexOf('/'+BUCKET+'/');if(i<0)return;
+    var path=decodeURIComponent(url.slice(i+BUCKET.length+2).split('?')[0]);
+    sb.storage.from(BUCKET).remove([path]).then(function(){},function(){});
+  }catch(e){}
+}
+
+/* ---------- actions ---------- */
+function setBookingStatus(id,status,okMsg,btn){
+  if(btn)btn.disabled=true;
+  sb.from('bookings').update({status:status}).eq('id',id).select().then(function(r){
+    if(r.error||!r.data||!r.data.length){
+      var m=String(r.error&&r.error.message||'');
+      toast((m.indexOf('date_')>-1||(r.error&&r.error.code==='23505'))?t('tBusy'):t('tSaveFail'));
+      loadOwner();return;
+    }
+    toast(okMsg);loadOwner();
+  },function(){toast(t('eNet'));if(btn)btn.disabled=false});
+}
+var A={
+  pickday:function(el){S.sel=el.dataset.d;S.err.date='';updateCal();var de=$('#seldate');if(de&&de.nextElementSibling&&de.nextElementSibling.classList.contains('err'))de.nextElementSibling.remove()},
+  mprev:function(){var c=S.cal;c.m--;if(c.m<0){c.m=11;c.y--}updateCal()},
+  mnext:function(){var c=S.cal;c.m++;if(c.m>11){c.m=0;c.y++}updateCal()},
+  resetf:function(){S.f={w:LAUNCH[0]||'',e:'',q:'',d:''};S.busyIds=null;S.busyFor='';render()},
+  reloadhalls:function(){loadHalls();render()},
+  reloadhall:function(){loadHall(S.hallId);render()},
+  reloadmy:function(){loadMy();render()},
+  reloadowner:function(){loadOwner();render()},
+  tog:function(el){var k=el.dataset.k,v=el.dataset.v,a=S.of[k],i=a.indexOf(v);if(i>-1)a.splice(i,1);else a.push(v);render()},
+  addhall:function(){S.editing='';S.of=blankForm();S.oerr={};S.adding=true;render()},
+  cancelhall:function(){S.adding=false;S.editing='';S.of=blankForm();S.oerr={};render()},
+  edithall:function(el){
+    var h=findOH(el.dataset.id);if(!h)return;
+    S.of={name:h.name||'',wilaya:h.wilaya||'',commune:h.commune||'',capacity:String(h.capacity||''),price:String(h.price||''),phone:h.phone||'',desc:h.description||'',events:(h.events||[]).slice(),features:(h.features||[]).slice(),photoUrl:h.photo_url||'',photoBlob:null,photoPrev:''};
+    S.editing=h.id;S.oerr={};S.adding=true;render();window.scrollTo(0,0);
+  },
+  rmphoto:function(){if(S.of.photoPrev){try{URL.revokeObjectURL(S.of.photoPrev)}catch(e){}}S.of.photoBlob=null;S.of.photoPrev='';S.of.photoUrl='';render()},
+  aumode:function(el){S.au.mode=el.dataset.m;S.au.err='';S.au.info='';S.au.pw='';render()},
+  logout:function(){sb.auth.signOut().then(function(){toast(t('tOut'))},function(){toast(t('eNet'))})},
+  cancelb:function(el){
+    var code=el.dataset.id;
+    if(S.arm!=='c'+code){S.arm='c'+code;render();return}
+    var ph=phoneFor(code);S.arm='';
+    if(!ph){toast(t('cancelFail'));render();return}
+    el.disabled=true;
+    sb.rpc('cancel_booking',{p_code:code,p_phone:ph}).then(function(r){
+      if(r.error||r.data!==true)toast(t('cancelFail'));else toast(t('tCancelled'));
+      loadMy();render();
+    },function(){toast(t('eNet'));render()});
+  },
+  delhall:function(el){
+    var id=el.dataset.id;
+    if(S.arm!=='h'+id){S.arm='h'+id;render();return}
+    var h=findOH(id),old=h&&h.photo_url;S.arm='';el.disabled=true;
+    sb.from('halls').delete().eq('id',id).select().then(function(r){
+      if(r.error||!r.data||!r.data.length){toast(t('tSaveFail'));loadOwner();return}
+      if(old)removePhotoUrl(old);
+      toast(t('tHallDeleted'));loadOwner();
+    },function(){toast(t('eNet'));render()});
+  },
+  accept:function(el){
+    var b=findOB(el.dataset.id);if(!b)return;
+    var others=S.ob.filter(function(x){return x!==b&&x.hall_id===b.hall_id&&x.event_date===b.event_date&&x.status==='pending'}).length;
+    setBookingStatus(b.id,'confirmed',others?t('tAcceptedN',others):t('tAccepted'),el);
+  },
+  reject:function(el){setBookingStatus(el.dataset.id,'rejected',t('tRejected'),el)},
+  ocancel:function(el){
+    var id=el.dataset.id;
+    if(S.arm!=='o'+id){S.arm='o'+id;render();return}
+    S.arm='';setBookingStatus(id,'cancelled',t('tOwnerCancelled'),el);
+  },
+  block:function(el){
+    var id=el.dataset.id,inp=document.getElementById('blk-'+id),v=inp&&inp.value,h=findOH(id);
+    if(!v||!h){toast(t('tPickDate'));return}
+    if(v<todayIso()){toast(t('tPast'));return}
+    var list=h.blocked_dates||[];
+    if(list.indexOf(v)>-1){toast(t('tAlready'));return}
+    if(S.ob.some(function(b){return b.hall_id===id&&b.event_date===v&&b.status==='confirmed'})){toast(t('tAlreadyBooked'));return}
+    var nl=list.concat([v]).sort();
+    el.disabled=true;
+    sb.from('halls').update({blocked_dates:nl}).eq('id',id).select().then(function(r){
+      if(r.error||!r.data||!r.data.length){toast(t('tSaveFail'));el.disabled=false;return}
+      h.blocked_dates=nl;toast(t('tClosed',longDate(v)));render();
+    },function(){toast(t('eNet'));el.disabled=false});
+  },
+  unblock:function(el){
+    var h=findOH(el.dataset.id);if(!h)return;
+    var d=el.dataset.d,nl=(h.blocked_dates||[]).filter(function(x){return x!==d});
+    el.disabled=true;
+    sb.from('halls').update({blocked_dates:nl}).eq('id',h.id).select().then(function(r){
+      if(r.error||!r.data||!r.data.length){toast(t('tSaveFail'));el.disabled=false;return}
+      h.blocked_dates=nl;toast(t('tReopened'));render();
+    },function(){toast(t('eNet'));el.disabled=false});
+  }
+};
+app.addEventListener('click',function(e){var el=e.target.closest('[data-a]');if(el&&A[el.dataset.a]){e.preventDefault();A[el.dataset.a](el)}});
+
+function clearErr(el,k){if(!S.err[k])return;S.err[k]='';var n=el.nextElementSibling;if(n&&n.classList.contains('err'))n.remove()}
+app.addEventListener('input',function(e){
+  var el=e.target,d=el.dataset||{};
+  if(d.f){S.f[d.f]=el.value;if(d.f==='d')loadBusyOn(el.value);else refreshResults()}
+  else if(d.bk){S.bk[d.bk]=el.value;clearErr(el,d.bk)}
+  else if(d.of){S.of[d.of]=el.value;if(d.of==='wilaya')render()}
+  else if(d.au){S.au[d.au]=el.value}
+  else if(d.tr){S.tr[d.tr]=el.value}
+});
+app.addEventListener('change',function(e){
+  var el=e.target;
+  if(el.id==='o-photo'&&el.files&&el.files[0]){
+    compress(el.files[0],function(b){
+      if(!b){toast(t('tPhotoFail'));return}
+      if(S.of.photoPrev){try{URL.revokeObjectURL(S.of.photoPrev)}catch(x){}}
+      S.of.photoBlob=b;S.of.photoPrev=URL.createObjectURL(b);render();
+    });
+  }
+});
+app.addEventListener('submit',function(e){
+  e.preventDefault();
+  var id=e.target.id;
+  if(id==='bkform')submitBooking();
+  else if(id==='hallform')submitHall();
+  else if(id==='authform')doAuth();
+  else if(id==='trform')submitTrack();
+});
+
+/* ---------- submits ---------- */
+var BKERR={bad_input:['form','eServer'],hall_unavailable:['form','eHall'],date_past:['date','eDatePast'],date_far:['date','eDateFar'],bad_event:['form','eEvent'],bad_guests:['guests','errGuests'],date_busy:['date','errBusy'],duplicate:['date','errDup'],rate_limit:['form','eRate'],try_again:['form','eNet']};
+function submitBooking(){
+  var h=S.hall;if(!h||S.sending)return;
+  var b=S.bk,er={},ph=cleanPhone(b.phone),g=Number(b.guests),evs=h.events||[],evt=evs.indexOf(b.event)>-1?b.event:evs[0];
+  if(!S.sel)er.date=t('errDate');
+  else if(S.busy[S.sel])er.date=t('errBusy');
+  if(b.name.trim().length<3)er.name=t('errName');
+  if(!/^0[567]\d{8}$/.test(ph))er.phone=t('errPhone');
+  if(!g||g<10||g%1!==0)er.guests=t('errGuests');else if(g>h.capacity)er.guests=t('errCap',fmt(h.capacity));
+  S.err=er;
+  if(Object.keys(er).length){render();var f=$('.err');if(f)f.scrollIntoView({block:'center'});return}
+  S.sending=true;render();
+  var hid=h.id,date=S.sel;
+  sb.rpc('create_booking',{p_hall:hid,p_date:date,p_name:b.name.trim(),p_phone:ph,p_event:evt,p_guests:g,p_notes:b.notes.trim()||null}).then(function(r){
+    S.sending=false;
+    if(r.error){
+      var m=String(r.error.message||''),map=BKERR[m];
+      if(m==='date_busy'||m==='duplicate'){if(m==='date_busy')S.busy[date]=true;S.sel=''}
+      S.err={};
+      if(map)S.err[map[0]]=t(map[1]);else S.err.form=t('eNet');
+      if(S.hallId===hid&&view()==='hall'){render();var f2=$('.err,.errbox');if(f2)f2.scrollIntoView({block:'center'})}
+      return;
+    }
+    var code=String(r.data||'');
+    addMy(code,ph);
+    S.flash=code;S.bk.guests='';S.bk.notes='';S.sel='';S.err={};
+    toast(t('toastSent'));
+    location.hash='bookings';
+  },function(){S.sending=false;S.err={form:t('eNet')};if(view()==='hall')render()});
+}
+function submitTrack(){
+  var x=S.tr;if(x.busy)return;
+  var code=x.code.trim().toUpperCase(),ph=cleanPhone(x.phone);
+  x.err='';
+  if(code.length<4)x.err=t('errCode');
+  else if(!/^0[567]\d{8}$/.test(ph))x.err=t('errPhone');
+  if(x.err){render();return}
+  x.busy=true;render();
+  sb.rpc('track_bookings',{p_phone:ph,p_codes:[code]}).then(function(r){
+    x.busy=false;
+    if(r.error)x.err=t('eNet');
+    else if(!r.data||!r.data.length)x.err=t('notFoundBk');
+    else{addMy(r.data[0].r_code,ph);x.code='';x.err='';S.flash=r.data[0].r_code;toast(t('tTracked'));loadMy()}
+    render();
+  },function(){x.busy=false;x.err=t('eNet');render()});
+}
+function submitHall(){
+  if(S.saving)return;
+  var f=S.of,er={},ph=cleanPhone(f.phone),cap=Number(f.capacity),pr=Number(f.price);
+  if(f.name.trim().length<3)er.name=t('eoName');
+  if(!f.wilaya)er.wilaya=t('eoWilaya');
+  if(f.commune.trim().length<2)er.commune=t('eoCommune');
+  if(!cap||cap<20||cap>5000||cap%1!==0)er.capacity=t('eoCap');
+  if(!pr||pr<10000||pr>100000000||pr%1!==0)er.price=t('eoPrice');
+  if(!/^0\d{8,9}$/.test(ph))er.phone=t('eoPhone');
+  if(!f.events.length)er.events=t('eoEvents');
+  S.oerr=er;
+  if(Object.keys(er).length){render();var x=$('.err');if(x)x.scrollIntoView({block:'center'});return}
+  if(!S.user)return;
+  S.saving=true;render();
+  var editing=S.editing,oldHall=editing?findOH(editing):null,oldPhoto=oldHall?oldHall.photo_url:'';
+  var row={name:f.name.trim(),wilaya:f.wilaya,commune:f.commune.trim(),capacity:cap,price:pr,phone:ph,description:f.desc.trim()||null,events:f.events.slice(),features:f.features.slice(),photo_url:f.photoUrl||null};
+  var path='',p=Promise.resolve();
+  if(f.photoBlob){
+    path=S.user.id+'/'+Date.now()+'.jpg';
+    p=sb.storage.from(BUCKET).upload(path,f.photoBlob,{contentType:'image/jpeg',cacheControl:'31536000'}).then(function(r){
+      if(r.error)throw new Error('upload');
+      row.photo_url=sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+    });
+  }
+  p.then(function(){
+    var q=editing?sb.from('halls').update(row).eq('id',editing).select():sb.from('halls').insert(row).select();
+    return q.then(function(r){
+      if(r.error||!r.data||!r.data.length){if(path)removePhotoUrl('/'+BUCKET+'/'+path);throw new Error('save')}
+      if(editing&&oldPhoto&&oldPhoto!==row.photo_url)removePhotoUrl(oldPhoto);
+    });
+  }).then(function(){
+    if(f.photoPrev){try{URL.revokeObjectURL(f.photoPrev)}catch(e){}}
+    S.saving=false;S.of=blankForm();S.oerr={};S.adding=false;S.editing='';
+    toast(editing?t('tHallSaved'):t('tHallAdded'));
+    loadOwner();render();
+  }).then(null,function(err){
+    S.saving=false;
+    toast(err&&err.message==='upload'?t('tUploadFail'):t('tSaveFail'));
+    render();
+  });
+}
+
+/* ---------- language switch + start ---------- */
+function applyLang(){
+  document.documentElement.lang=LANG;
+  document.body.setAttribute('dir',isFr()?'ltr':'rtl');
+  $('#bname').textContent=isFr()?'Qaati':'قاعتي';
+  var b=$('#langbtn');b.textContent=isFr()?'العربية':'Français';b.setAttribute('lang',isFr()?'ar':'fr');
+  $('#tabs').setAttribute('aria-label',t('navLabel'));
+  var names={halls:'tabHalls',bookings:'tabBookings',owner:'tabOwner'};
+  document.querySelectorAll('.tabs a').forEach(function(a){a.querySelector('span').textContent=t(names[a.dataset.tab])});
+}
+$('#langbtn').addEventListener('click',function(){
+  LANG=isFr()?'ar':'fr';
+  try{localStorage.setItem('qaati.lang',LANG)}catch(e){}
+  applyLang();render();
+});
+
+applyLang();
+if(sb)initAuth();
+route();
+})();
+</script>
+</body>
+</html>
