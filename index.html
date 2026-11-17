@@ -175,7 +175,7 @@ button.chip[aria-pressed="true"]{background:var(--brand);color:var(--brand-ink);
 <main class="wrap" id="app"></main>
 
 <footer class="sig" role="contentinfo" aria-label="LDAK"><svg class="sig-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.3C.9 8.2 2.9 4.5 6.5 4.5c2 0 3.7 1.1 5.5 3.2 1.8-2.1 3.5-3.2 5.5-3.2 3.6 0 5.6 3.7 4.1 7.2C19.5 16.4 12 21 12 21z"/></svg><span class="sig-name" aria-hidden="true">LDAK</span><div class="sig-lines" aria-hidden="true"><i></i><i></i></div></footer>
-<div class="ver" dir="ltr">v1.1 · <a href="privacy-qaati.html" target="_blank" rel="noopener">سياسة الخصوصية · Confidentialité</a></div>
+<div class="ver" dir="ltr">v1.2 · <a href="https://ldak-books.github.io/qaati/privacy-qaati.html" target="_blank" rel="noopener">سياسة الخصوصية · Confidentialité</a></div>
 
 <nav class="tabs" id="tabs" aria-label="التنقل الرئيسي"><div>
   <a href="#halls" data-tab="halls"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V11a8 8 0 0 1 16 0v10M9 21v-6a3 3 0 0 1 6 0v6"/></svg><span>القاعات</span></a>
@@ -227,7 +227,7 @@ var I={
  soon:['قريباً','bientôt'],soonTitle:['هذه الولاية لم تنطلق بعد','Cette wilaya n’est pas encore ouverte'],
  soonHint:['إذا عندك قاعة في هذه الولاية، سجّلها مسبقاً وتظهر عند الانطلاق.','Si vous avez une salle ici, inscrivez-la à l’avance : elle apparaîtra au lancement.'],
  soonOwnerHint:['هذه الولاية لم تنطلق بعد. تُحفظ قاعتك وتظهر للزبائن عند انطلاقها.','Cette wilaya n’est pas encore ouverte. Votre salle sera enregistrée et visible dès son lancement.'],
- waOwner:['راسل القاعة على واتساب','Écrire à la salle sur WhatsApp'],waCustomer:['راسل الزبون على واتساب','Écrire au client sur WhatsApp'],
+ waOwner:['راسل القاعة على واتساب','Écrire à la salle sur WhatsApp'],callHall:['اتصل بالقاعة','Appeler la salle'],mapHall:['الموقع على الخريطة','Voir sur la carte'],waCustomer:['راسل الزبون على واتساب','Écrire au client sur WhatsApp'],
  waMsgHall:['السلام عليكم، أريد الاستفسار عن قاعة {0}.','Bonjour, je souhaite des informations sur la salle {0}.'],
  waMsgCust:['السلام عليكم، أرسلت طلب حجز لقاعة {0} بتاريخ {1} (رقم الطلب {2}).','Bonjour, j’ai envoyé une demande de réservation pour la salle {0} le {1} (réf. {2}).'],
  waMsgOwner:['السلام عليكم {0}، بخصوص طلبك لقاعة {1} بتاريخ {2}.','Bonjour {0}, au sujet de votre demande pour la salle {1} le {2}.'],
@@ -455,6 +455,17 @@ function calHtml(){
   '<div class="legend"><span><i style="background:var(--brand)"></i>'+t('legYours')+'</span><span><i style="background:var(--bad-bg)"></i>'+t('legBusy')+'</span><span><i style="border:1px solid var(--line)"></i>'+t('legFree')+'</span></div>';
 }
 function selText(){return S.sel?'<span class="seldate">'+longDate(S.sel)+'</span>':'<span class="hint">'+t('noDate')+'</span>'}
+function hallActions(h){
+  var wn=h.phone?waNum(h.phone):'';
+  var q=[h.name,h.commune,wname(h.wilaya),'Algérie'].filter(Boolean).join(' ');
+  var map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+  return '<div class="actions">'+
+    (wn?'<span class="chip">'+t('hallPhone')+': <bdi dir="ltr">'+esc(h.phone)+'</bdi></span>':'')+
+    (wn?'<a class="btn ghost small" href="tel:+'+wn+'">'+t('callHall')+'</a>':'')+
+    (wn?'<a class="btn ghost small" href="'+esc(waHref(h.phone,t('waMsgHall',h.name)))+'" target="_blank" rel="noopener">'+t('waOwner')+'</a>':'')+
+    '<a class="btn ghost small" href="'+esc(map)+'" target="_blank" rel="noopener">'+t('mapHall')+'</a>'+
+  '</div>';
+}
 function vHall(){
   var backLink='<a class="back" href="#halls">'+backChev()+t('back')+'</a>';
   if(S.hallState==='loading'||S.hallState==='idle')return backLink+loadingBox();
@@ -467,7 +478,7 @@ function vHall(){
   '<div><h1>'+esc(h.name)+'</h1><p class="loc">'+esc(wname(h.wilaya))+' · '+esc(h.commune)+'</p></div>'+
   '<div class="facts"><div><span>'+t('capacity')+'</span><b>'+t('capVal',fmt(h.capacity))+'</b></div><div><span>'+t('nightPrice')+'</span><b style="color:var(--brass)">'+money(h.price)+'</b></div></div>'+
   (h.description?'<p>'+esc(h.description)+'</p>':'')+
-  (h.phone&&waNum(h.phone)?'<div class="actions"><span class="chip">'+t('hallPhone')+': <bdi dir="ltr">'+esc(h.phone)+'</bdi></span><a class="btn ghost small" href="'+esc(waHref(h.phone,t('waMsgHall',h.name)))+'" target="_blank" rel="noopener">'+t('waOwner')+'</a></div>':'')+
+  hallActions(h)+
   '<section class="sec"><h2>'+t('events')+'</h2><div class="chips">'+evs.map(function(x){return '<span class="chip">'+esc(ev(x))+'</span>'}).join('')+'</div>'+
   (fts.length?'<h2>'+t('features')+'</h2><div class="chips">'+fts.map(function(x){return '<span class="chip">'+esc(ft(x))+'</span>'}).join('')+'</div>':'')+'</section>'+
   '<section class="sec"><h2>'+t('pickDate')+'</h2><div class="cal" id="calbox">'+calHtml()+'</div>'+
